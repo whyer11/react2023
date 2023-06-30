@@ -347,7 +347,7 @@ export function updateContainer(
   if (__DEV__) {
     onScheduleRoot(container, element);
   }
-  const current = container.current;
+  const current = container.current; // 这里是一个空fiber，update是空，memorizeState也是空
   const lane = requestUpdateLane(current);
 
   if (enableSchedulingProfiler) {
