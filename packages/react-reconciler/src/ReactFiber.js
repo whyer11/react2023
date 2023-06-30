@@ -147,7 +147,7 @@ function FiberNode(
   this.type = null;
   this.stateNode = null;
 
-  // Fiber
+  // Fiber 本身的属性, 它本身也是一个链表
   this.return = null;
   this.child = null;
   this.sibling = null;
@@ -158,7 +158,7 @@ function FiberNode(
 
   this.pendingProps = pendingProps;
   this.memoizedProps = null;
-  this.updateQueue = null;
+  this.updateQueue = null; //里面放的就是一个个的Update
   this.memoizedState = null;
   this.dependencies = null;
 
@@ -172,7 +172,7 @@ function FiberNode(
   this.lanes = NoLanes;
   this.childLanes = NoLanes;
 
-  this.alternate = null;
+  this.alternate = null; // 和另外一棵树互相持有
 
   if (enableProfilerTimer) {
     // Note: The following is done to avoid a v8 performance cliff.

@@ -242,6 +242,19 @@ function findHostInstanceWithWarning(
   return findHostInstance(component);
 }
 
+/**
+ * react render的入口文件
+ * create的时候还没有组件进来
+ * @param containerInfo
+ * @param tag
+ * @param hydrationCallbacks
+ * @param isStrictMode
+ * @param concurrentUpdatesByDefaultOverride
+ * @param identifierPrefix
+ * @param onRecoverableError
+ * @param transitionCallbacks
+ * @return {FiberRoot}
+ */
 export function createContainer(
   containerInfo: Container,
   tag: RootTag,
@@ -252,7 +265,9 @@ export function createContainer(
   onRecoverableError: (error: mixed) => void,
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): OpaqueRoot {
+  // 默认不水和
   const hydrate = false;
+  // 初始的children默认是null
   const initialChildren = null;
   return createFiberRoot(
     containerInfo,

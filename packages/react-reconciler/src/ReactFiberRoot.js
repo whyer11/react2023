@@ -127,6 +127,20 @@ function FiberRootNode(
   }
 }
 
+/**
+ * 创建FiberRoot
+ * @param containerInfo
+ * @param tag
+ * @param hydrate
+ * @param initialChildren
+ * @param hydrationCallbacks
+ * @param isStrictMode
+ * @param concurrentUpdatesByDefaultOverride
+ * @param identifierPrefix
+ * @param onRecoverableError
+ * @param transitionCallbacks
+ * @return {FiberRoot}
+ */
 export function createFiberRoot(
   containerInfo: Container,
   tag: RootTag,
@@ -166,6 +180,8 @@ export function createFiberRoot(
     isStrictMode,
     concurrentUpdatesByDefaultOverride,
   );
+  //这里成环了，current指向uninitializedFiber.stateNode指向root，root.current指向uninitializedFiber
+  // uninitializedFiber.stateNode.current = uninitializedFiber;
   root.current = uninitializedFiber;
   uninitializedFiber.stateNode = root;
 
@@ -194,10 +210,10 @@ export function createFiberRoot(
       isDehydrated: hydrate,
       cache: (null: any), // not enabled yet
     };
-    uninitializedFiber.memoizedState = initialState;
+    uninitializedFiber.memoizedState = initialState; //初始化状态
   }
 
-  initializeUpdateQueue(uninitializedFiber);
+  initializeUpdateQueue(uninitializedFiber); //初始化更新队列
 
   return root;
 }
