@@ -330,6 +330,14 @@ export function createHydrationContainer(
   return root;
 }
 
+/**
+ *
+ * @param element  要渲染的元素,可以是组件也可以是字符串，也可以是数组
+ * @param container 容器，就是createReactRoot返回的对象
+ * @param parentComponent  第一次render的时候是null
+ * @param callback 第一次render的时候是null
+ * @return {Lane}
+ */
 export function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
