@@ -348,13 +348,13 @@ export function updateContainer(
     onScheduleRoot(container, element);
   }
   const current = container.current; // 这里是一个空fiber，update是空，memorizeState也是空
-  const lane = requestUpdateLane(current);
+  const lane = requestUpdateLane(current); //请求当前的lane，其实也就是优先级
 
   if (enableSchedulingProfiler) {
     markRenderScheduled(lane);
   }
 
-  const context = getContextForSubtree(parentComponent);
+  const context = getContextForSubtree(parentComponent); // 第一次render的时候parentComponent是null，所以context也是一个空对象
   if (container.context === null) {
     container.context = context;
   } else {
@@ -381,7 +381,7 @@ export function updateContainer(
   const update = createUpdate(lane);
   // Caution: React DevTools currently depends on this property
   // being called "element".
-  update.payload = {element};
+  update.payload = {element}; // 这里的element就是要渲染的元素
 
   callback = callback === undefined ? null : callback;
   if (callback !== null) {
@@ -397,7 +397,7 @@ export function updateContainer(
     update.callback = callback;
   }
 
-  const root = enqueueUpdate(current, update, lane);
+  const root = enqueueUpdate(current, update, lane); // 将update放入到updateQueue中，这里的updateQueue是一个链表结构
   if (root !== null) {
     scheduleUpdateOnFiber(root, current, lane);
     entangleTransitions(root, current, lane);
