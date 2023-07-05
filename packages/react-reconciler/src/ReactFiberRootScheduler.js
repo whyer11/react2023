@@ -81,6 +81,12 @@ let isFlushingWork: boolean = false;
 
 let currentEventTransitionLane: Lane = NoLane;
 
+
+/**
+ * 这个版本的ensureRootIsScheduled和之前版本不太一样了
+ * 之前版本会直接调用scheduleTaskForRoot
+ * @param root
+ */
 export function ensureRootIsScheduled(root: FiberRoot): void {
   // This function is called whenever a root receives an update. It does two
   // things 1) it ensures the root is in the root schedule, and 2) it ensures
@@ -88,6 +94,13 @@ export function ensureRootIsScheduled(root: FiberRoot): void {
   //
   // Most of the actual scheduling logic does not happen until
   // `scheduleTaskForRootDuringMicrotask` runs.
+
+  // 每当根部收到更新时，就会调用这个函数。它做了两件事
+  // 1）确保该根在根计划中，2）确保
+  // 有一个待处理的微任务来处理根计划。
+  //
+  // 大多数实际的调度逻辑在以下情况下才会发生
+  // `scheduleTaskForRootDuringMicrotask'运行时才会发生。
 
   // Add the root to the schedule
   if (root === lastScheduledRoot || root.next !== null) {
@@ -340,6 +353,12 @@ function processRootScheduleInMicrotask() {
   flushSyncWorkOnAllRoots();
 }
 
+/**
+ *
+ * @param root
+ * @param currentTime
+ * @returns {Lane}
+ */
 function scheduleTaskForRootDuringMicrotask(
   root: FiberRoot,
   currentTime: number,
